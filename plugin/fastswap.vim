@@ -3,22 +3,23 @@
 
 let g:fastSwapBuffs = []
 
-function s:ValidBuffer(ft)
-    return a:ft !=# 'netrw' && 
-                \ a:ft !=# 'nerdtree' &&
-                \ a:ft !=# ''
+function s:ValidBuffer(buff)
+    let ft = getbufvar(a:buff, "&filetype")
+    return ft !=# 'netrw' && 
+                \ ft !=# 'nerdtree' &&
+                \ !isdirectory(bufname(a:buff))
 endfunction
 
 function s:VerifyBuffers() abort
   let g:fastSwapBuffs = filter(
         \ g:fastSwapBuffs,
-        \ 'bufexists(v:val) && s:ValidBuffer(getbufvar(v:val, "&filetype"))'
+        \ 'bufexists(v:val) && s:ValidBuffer(v:val)'
         \ )
 endfunction
 
 function s:SaveTwoRecent()
     let currBufNum = bufnr('%')
-    if !s:ValidBuffer(&ft)
+    if !s:ValidBuffer(currBufNum)
         return
     endif
     call filter(g:fastSwapBuffs, 'v:val !=# currBufNum')
@@ -29,7 +30,8 @@ function s:SaveTwoRecent()
 endfunction
 
 function FastSwap()
-    if !s:ValidBuffer(&ft)
+    let currBufNum = bufnr('%')
+    if !s:ValidBuffer(currBufNum)
         echo "INVALID BUFFER"
         return
     endif
@@ -48,4 +50,4 @@ augroup FastSwapGroup
     autocmd VimEnter * call timer_start(100, {-> s:VerifyBuffers()})
     autocmd BufEnter * call s:VerifyBuffers()
     autocmd BufEnter * call s:SaveTwoRecent()
-augroup END
+augroup EN
