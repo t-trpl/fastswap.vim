@@ -48,5 +48,3 @@ augroup FastSwapGroup
     autocmd BufEnter * call s:VerifyBuffers()
     autocmd BufEnter * call s:SaveTwoRecent()
 augroup END
-
-nnoremap <F3> :call FastSwap()<CR>
