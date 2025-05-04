@@ -5,7 +5,8 @@ let g:fastSwapBuffs = []
 
 function s:ValidBuffer(ft)
     return a:ft !=# 'netrw' && 
-                \ a:ft !=# 'nerdtree'
+                \ a:ft !=# 'nerdtree' &&
+                \ a:ft !=# ''
 endfunction
 
 function s:VerifyBuffers() abort
