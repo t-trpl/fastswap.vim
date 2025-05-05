@@ -1,13 +1,14 @@
 " Tyler Triplett
 " fastswap.vim
+" This does slightly more than :e# or :b#, as you can ignore defined filetypes.
 
 let g:fastSwapBuffs = []
 
-function s:ValidBuffer(buff)
-    let ft = getbufvar(a:buff, "&filetype")
+function s:ValidBuffer(bufn) abort
+    let ft = getbufvar(a:bufn, "&filetype")
     return ft !=# 'netrw' && 
                 \ ft !=# 'nerdtree' &&
-                \ !isdirectory(bufname(a:buff))
+                \ !isdirectory(bufname(a:bufn))
 endfunction
 
 function s:VerifyBuffers() abort
@@ -17,7 +18,7 @@ function s:VerifyBuffers() abort
         \ )
 endfunction
 
-function s:SaveTwoRecent()
+function s:SaveTwoRecent() abort
     let currBufNum = bufnr('%')
     if !s:ValidBuffer(currBufNum)
         return
@@ -29,7 +30,7 @@ function s:SaveTwoRecent()
     endif
 endfunction
 
-function FastSwap()
+function FastSwap() abort
     let currBufNum = bufnr('%')
     if !s:ValidBuffer(currBufNum)
         echo "INVALID BUFFER"
