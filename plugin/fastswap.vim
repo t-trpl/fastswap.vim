@@ -1,6 +1,6 @@
 " Tyler Triplett
 " fastswap.vim
-" This does slightly more than :e# or :b#, as you can ignore defined filetypes.
+" This does slightly more than :b#, as you can ignore defined filetypes.
 
 let g:fastSwapBuffs = []
 
