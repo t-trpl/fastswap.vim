@@ -32,12 +32,10 @@ endfunction
 
 function FastSwap() abort
     let currBufNum = bufnr('%')
+    let buffSize = len(g:fastSwapBuffs)
     if !s:ValidBuffer(currBufNum)
         echo "INVALID BUFFER"
-        return
-    endif
-    let buffSize = len(g:fastSwapBuffs)
-    if buffSize == 0
+    elseif buffSize == 0
         echo "NO BUFFERS"
     elseif buffSize == 1
         echo "NO OTHER BUFFERS"
